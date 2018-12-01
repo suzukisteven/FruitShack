@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+ #main-search {
+   width: 285px !important;
+   -webkit-transition: all .5s ease;
+   -moz-transition: all .5s ease;
+   transition: all .5s ease;
+ }
+
+ #main-search:focus {
+   width: 500px !important;
+ }
