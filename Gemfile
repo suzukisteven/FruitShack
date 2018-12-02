@@ -27,6 +27,9 @@ gem 'jbuilder', '~> 2.5'
 
 #Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+# Add Google OAuth to manage User Login
+gem 'omniauth'
+gem 'omniauth-google-oauth2', '~> 0.2.1'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

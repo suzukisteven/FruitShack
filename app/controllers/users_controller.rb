@@ -8,8 +8,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:success] = "Successfully created an account."
-      redirect_to '/'
+      flash[:success] = "You have successfully created an account!"
+      redirect_to '/login'
     else
       flash[:error] = "Your account could not be created. Please try again."
       redirect_to '/signup'
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   private def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:firstname, :lastname, :email, :password)
   end
 
 end
