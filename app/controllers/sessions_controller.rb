@@ -8,24 +8,33 @@ class SessionsController < ApplicationController
       user = authentication.user
       authentication.update_token(auth_hash)
       @next = root_url
-      @notice = "You have successfully Signed In"
+      @notice = "You have successfully signed in"
 
     else
       user = User.create_with_auth_and_hash(authentication, auth_hash)
       @next = root_url
-      @notice = "User created. Please confirm or edit details"
+      @notice = "User successfully created. Please confirm or edit details"
     end
-    # sign_in(user)
+
     session[:user_id] = user.id
-    redirect_to @next, :success => @notice
+    flash[:success] = @notice
+    redirect_to @next
   end
 
   def create
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
+
+      # if params[:remember_me]
+      #   cookies.permanent[:auth_token] = { value: user.auth_token, expires: 2.weeks.from_now }
+      # else
+      #   cookies[:auth_token] = user.auth_token
+      # end
+
       session[:user_id] = user.id
+      # cookies.permanent[:auth_token] = user.auth_token
       redirect_to '/'
-      flash[:success] = "You have successfully Signed In"
+      flash[:success] = "Welcome back #{user.firstname} #{user.lastname}: You have successfully signed in"
     else
       redirect_to '/login'
     end
@@ -33,8 +42,9 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    # cookies.delete(:auth_token)
     redirect_to '/login'
-    flash[:error] = "You have Signed Out"
+    flash[:error] = "You have signed out"
   end
 
 end
