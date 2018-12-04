@@ -15,12 +15,12 @@
  */
 
  #main-search {
-   width: 400px !important;
+   width: 300px !important;
    -webkit-transition: all .5s ease;
    -moz-transition: all .5s ease;
    transition: all .5s ease;
  }
 
  #main-search:focus {
-   width: 700px !important;
+   width: 600px !important;
  }

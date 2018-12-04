@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ShopiBuy - Online Marketplace</title>
+    <title>ShopiBuy - An Ecommerce Store</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -39,14 +39,22 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Products</a>
           </li>
-          <li class="nav-item">
-            <%= link_to "Add Product", new_product_path, class:"nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to root_path, class:"nav-link" do %>
-              My Cart: <span>(0)</span> <i class="fas fa-shopping-cart"></i> My Cart: (0)
-            <% end %>
-          </li>
+          <% if signed_in? && current_user.admin? -%>
+            <li class="nav-item">
+              <%= link_to "Add Product", new_product_path, class:"nav-link" %>
+            </li>
+          <% end %>
+          <% if signed_in? -%>
+            <li class="nav-item">
+              <%= link_to "My Profile", profile_path(current_user.id), class:"nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to root_path, class:"nav-link" do %>
+                <i class="fas fa-shopping-cart text-warning"></i> Cart: <span>(0)</span>
+              <% end %>
+            </li>
+          <% else %>
+          <% end %>
           <% if signed_in? -%>
           <% else -%>
             <li class="nav-item">

@@ -4,6 +4,15 @@ class User < ApplicationRecord
   has_secure_password
   before_create { generate_token(:auth_token) }
 
+  enum role: [:customer, :admin]
+
+  # For every new User created, set the default role to :customer
+  after_initialize do
+    if self.new_record?
+      self.role ||= :customer
+    end
+  end
+
   def generate_token(column)
     begin
       self[column] = SecureRandom.urlsafe_base64

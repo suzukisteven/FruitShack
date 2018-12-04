@@ -5,10 +5,14 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # User Login Routes
-  get 'signup' => 'users#new'
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  get 'logout' => 'sessions#destroy'
+  get '/signup' => 'users#new'
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
+  #User Profile Routes
+  get '/profile' => 'users#profile'
+  get '/profile/:id' => 'users#profile/:id'
 
   resources :users
 

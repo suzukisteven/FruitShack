@@ -36,6 +36,7 @@ class SessionsController < ApplicationController
       redirect_to '/'
       flash[:success] = "Welcome back #{user.firstname} #{user.lastname}: You have successfully signed in"
     else
+      flash[:error] = "Incorrect email or password. Please try again."
       redirect_to '/login'
     end
   end
