@@ -24,3 +24,7 @@
  #main-search:focus {
    width: 500px !important;
  }
+
+ .sticky-offset {
+   top: 33px;
+ }
