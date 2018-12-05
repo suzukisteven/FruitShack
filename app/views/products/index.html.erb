@@ -9,17 +9,11 @@
           <div class="card-body">
             <h5 class="card-title"><%= product.name %></h5>
             <p class="card-text"><%= truncate(product.description, length: 150) %></p>
-            <p class="card-text"><strong><%= product.price %></strong></p>
-            <%= link_to "See More", product_path(product.id), class:"btn btn-primary" %>
+            <p class="card-text"><strong><%= number_to_currency product.price %></strong></p>
+            <%= link_to "Read More", product_path(product.id), class:"btn btn-primary" %>
           </div>
         </div>
       </div>
       <% end %>
     </div>
   </div>
-
-  <div class="">
-    <% @products.each do |product| %>
-      <%= render "product_row", product: product, order_item: @order_item %>
-    <% end %>
-  </div>  

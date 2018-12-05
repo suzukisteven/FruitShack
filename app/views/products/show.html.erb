@@ -1,5 +1,35 @@
 <h1 class="mt-3 mb-3">Product Show Page</h1>
 
-<h3 class="mb-4"><strong><%= @product.name %></strong></h3>
-<h4><%= @product.description %></h4>
-<h5 class="mt-5"><strong>Price:</strong> <%= @product.price %></h5>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-8">
+      <img class="border border-muted" src="https://cdn.shopify.com/s/files/1/1078/0310/products/fruit-banana-dole-1_1024x1024.jpg?v=1500709708" alt="" width="650px" height="650px">
+    </div>
+
+    <div class="col-4">
+      <h3 class="mb-4"><strong><%= @product.name %></strong></h3>
+      <h5 class="mb-4"><%= @product.description %></h5>
+
+      <div class="row">
+        <div class="col-xs-4">
+
+          <%= form_for @order_item, remote: true do |f| %>
+
+          <div class="input-group">
+            <%= f.label :quantity, "Quantity", class:"mr-3 mt-2"%>
+            <%= f.number_field :quantity, value: 1, class: "form-control", min: 1 %>
+            <div class="input-group-btn">
+              <%= f.hidden_field :product_id, value: @product.id %>
+              <%= f.submit "Add to Cart", class: "btn btn-primary" %>
+            </div>
+          </div>
+          <h5 class="mt-3 text-right">Price: <span style="color: green"><%= number_to_currency @product.price %></span></h5>
+
+          <% end %>
+        </div>
+    </div>
+
+  </div>
+
+
+</div>

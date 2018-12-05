@@ -1,17 +1,19 @@
 class ProductsController < ApplicationController
   # before_action :require_login, only: [:new, :create, :destroy]
-  before_action :set_product, only: [:show]
+  before_action :set_product, only: [:show, :update, :delete]
+  before_action :check_role, only:[:new]
 
   def index
-    @products = Product.all
+    @products = Product.all.order(created_at: :desc)
+    @order_item = current_order.order_items.new
   end
 
   def new
     @product = Product.new
-    # if @current_user = nil
-    #   flash[:error] = "Please login to continue."
-    #   redirect_to login_path
-    # end
+    if current_user = nil && current_user != admin!
+      flash[:error] = "Please login to continue."
+      redirect_to login_path
+    end
   end
 
   def create
@@ -21,18 +23,19 @@ class ProductsController < ApplicationController
       redirect_to root_path
     else
       @product.errors.full_messages.each_with_index do |e,i|
-      key = "error" + i.to_s
-      flash[key] = e
-      redirect_to root_path
+      # key = "error" + i.to_s
+      flash[:error] = e + ". Please make changes and try again."
+      redirect_to new_product_path
       end
     end
   end
 
   def show
+    @order_item = current_order.order_items.new
   end
 
   private
-  # prevent repetition
+  # Set the product by id for show, update, delete - prevent repetition
   def set_product
     @product = Product.find(params[:id])
   end
@@ -45,6 +48,14 @@ class ProductsController < ApplicationController
   def logged_in?
     !@current_user.nil?
   end
+
+  # checks if a users role is :customer, if yes shows error msg and redirects them to root
+  def check_role
+  if current_user.customer?
+    flash[:error] = "You are not authorized to perform that action."
+    redirect_to root_path
+  end
+end
 
   # requires login using the logged_in? method above, or flashes an error message.
   def require_login

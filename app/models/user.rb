@@ -1,12 +1,11 @@
 class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   has_many :authentications, dependent: :destroy
-  has_secure_password
   before_create { generate_token(:auth_token) }
-
   enum role: [:customer, :admin]
+  has_secure_password
 
-  # For every new User created, set the default role to :customer
+  # For every new User created, set the default role to :customer account-level
   after_initialize do
     if self.new_record?
       self.role ||= :customer

@@ -25,14 +25,14 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
 
-      # if params[:remember_me]
-      #   cookies.permanent[:auth_token] = { value: user.auth_token, expires: 2.weeks.from_now }
-      # else
-      #   cookies[:auth_token] = user.auth_token
-      # end
+      if params[:remember_me]
+        cookies.permanent[:auth_token] = { value: user.auth_token, expires: 2.weeks.from_now }
+      else
+        cookies[:auth_token] = user.auth_token
+      end
 
-      session[:user_id] = user.id
-      # cookies.permanent[:auth_token] = user.auth_token
+      # session[:user_id] = user.id
+      cookies.permanent[:auth_token] = user.auth_token
       redirect_to '/'
       flash[:success] = "Welcome back #{user.firstname} #{user.lastname}: You have successfully signed in"
     else
@@ -42,8 +42,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    # cookies.delete(:auth_token)
+    # session[:user_id] = nil
+    cookies.delete(:auth_token)
     redirect_to '/login'
     flash[:error] = "You have signed out"
   end

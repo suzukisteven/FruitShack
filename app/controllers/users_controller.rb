@@ -16,9 +16,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def cart
+    @user = current_user
+  end
+
   def profile
     @user = current_user
   end
+
 
   private
 
