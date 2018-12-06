@@ -1,0 +1,26 @@
+<% if !@order_item.nil? && @order_item.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+    <% @order_item.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h3 class="mt-3"><%= current_user.firstname %> <%= current_user.lastname %>'s Shopping Cart</h3>
+<% if @order_items.size == 0 %>
+  <p class="text-center mt-5">
+    There are currently no items in your shopping cart.  <%= link_to "Continue shopping", root_path %> and add some items to your cart!
+  </p>
+<% else %>
+  <% @order_items.each do |order_item| %>
+    <%= render 'carts/cart_row', product: order_item.product, order_item: order_item, show_total: true %>
+  <% end %>
+<% end %>
+
+<hr class="my-4 mt-5">
+<% if @order_items.size > 0 %>
+  <h3 class="text-right">Subtotal: <%= number_to_currency current_order.subtotal %></h3>
+  <%= link_to "Proceed to Checkout", checkout_path, class:"btn btn-success mb-5", style:'float: right;' %>
+<% end %>

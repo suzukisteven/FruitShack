@@ -1,0 +1,21 @@
+<h3 class="mt-3 mb-3">New Products</h3>
+
+  <div class="container d-flex">
+    <div class="card-deck">
+      <% @products.each do |product| %>
+      <div class="row">
+        <div class="card text-center mr-5 mb-5" style="width: 21rem;">
+          <% if product.image.present? -%>
+            <img class="card-img-top" src="<%= product.image.url %>" alt="Card image cap">
+          <% end -%>
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= truncate(product.description, length: 150) %></p>
+            <p class="card-text"><strong><%= number_to_currency product.price %></strong></p>
+            <%= link_to "See More", product_path(product.id), class:"btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>

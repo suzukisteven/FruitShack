@@ -1,0 +1,25 @@
+<h1 class="mt-3 mb-3">Welcome to ShopiBuy</h1>
+
+  <div class="container d-flex">
+    <div class="card-deck">
+      <% @products.each do |product| %>
+      <div class="row">
+        <div class="card text-center mr-5 mb-5" style="width: 21rem;">
+          <img class="card-img-top" src="http://placehold.it/300x300" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= truncate(product.description, length: 150) %></p>
+            <p class="card-text"><strong><%= product.price %></strong></p>
+            <%= link_to "See More", product_path(product.id), class:"btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="">
+    <% @products.each do |product| %>
+      <%= render "product_row", product: product, order_item: @order_item %>
+    <% end %>
+  </div>  
