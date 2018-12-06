@@ -14,17 +14,19 @@
  *= require_self
  */
 
- #main-search {
+/* Main search bar expanding animation when on focus */
+ #query {
    width: 300px !important;
    -webkit-transition: all .5s ease;
    -moz-transition: all .5s ease;
    transition: all .5s ease;
  }
 
- #main-search:focus {
+ #query:focus {
    width: 500px !important;
  }
 
+/* Sticky top offset for payment info box in checkout page  */
  .sticky-offset {
    top: 33px;
  }

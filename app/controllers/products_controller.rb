@@ -34,14 +34,25 @@ class ProductsController < ApplicationController
     @order_item = current_order.order_items.new
   end
 
+  def search
+    @searchQuery = params[:product][:multi]
+    @products = Product.all.order(created_at: :desc)
+    @products = Product.multi(params[:product][:multi]) if params[:product][:multi].present?
+
+    respond_to do |response|
+      response.html { render "products/index" }
+      response.js
+    end
+  end
+
   private
-  # Set the product by id for show, update, delete - prevent repetition
+  # Set the product by id for show, update, delete - done to prevent repetition
   def set_product
     @product = Product.find(params[:id])
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :price)
+    params.require(:product).permit(:name, :description, :price, :image)
   end
 
   # returns true if user is logged in, otherwise returns false.

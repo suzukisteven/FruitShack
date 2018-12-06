@@ -25,17 +25,21 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
-#Use ActiveModel has_secure_password
+# Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-# Add Google OAuth to manage User Login
+# Add Facecbook & Google OAuth to manage User Login
 gem 'omniauth'
 gem 'omniauth-google-oauth2', '~> 0.2.1'
+gem 'omniauth-facebook'
 
-#Braintree for payment processing
+# Braintree for payment processing
 gem 'braintree'
 
+# Carrierwave for image uploading
+gem 'carrierwave'
+
 # Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -48,6 +52,9 @@ gem "figaro"
 
 # Font-Awesome for icons
 gem 'font-awesome-rails'
+
+# Twilio for SMS sending on checkout
+gem 'twilio-ruby'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

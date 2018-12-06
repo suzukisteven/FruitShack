@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_04_193116) do
+ActiveRecord::Schema.define(version: 2018_12_06_001426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2018_12_04_193116) do
     t.datetime "updated_at", null: false
     t.decimal "price", precision: 12, scale: 3
     t.boolean "active"
+    t.string "image"
   end
 
   create_table "users", force: :cascade do |t|
@@ -72,6 +73,8 @@ ActiveRecord::Schema.define(version: 2018_12_04_193116) do
     t.string "lastname"
     t.string "auth_token"
     t.integer "role"
+    t.string "provider"
+    t.string "uid"
   end
 
   add_foreign_key "authentications", "users"

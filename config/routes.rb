@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  # Root / Home Page
-  # root 'home#index'
+  # Root: Product storefront page
   root 'products#index'
 
   # User Login Routes
@@ -10,6 +9,13 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
+
+  # Google OAuth Callback Routes
+  get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+
+  # Facebook callback Routes
+  # get 'auth/facebook/callback' => 'sessions#create'
+  # get 'auth/failure' => redirect('/')
 
   resources :users
 
@@ -20,21 +26,24 @@ Rails.application.routes.draw do
   # User Cart Routes
   # get '/cart' => 'users#cart'
   # get '/cart/:id' => 'users#cart/:id'
-  # these make no fking difference???
+  # these made no difference.
 
   resource :cart, only: [:show]
 
   # Order Routes
   resources :order_items, only: [:create, :update, :destroy]
 
-  # Checkout Route
-  get 'braintree/new' => 'braintree#new'
+  # Search bar post request Route
+  post "/products/search" => "products#search", as: "search"
+
+  # Braintree Checkout Route
+  get '/checkout' => 'braintree#new', as: 'checkout'
   post 'braintree/checkout' => 'braintree#checkout'
+
+  # Twilio SMS post request Route
+  post '/twilio/sms'
 
   # Products Routes
   resources :products, only: [:new, :show, :create, :update, :delete]
-
-  # Google OAuth Callback Routes
-  get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
 end

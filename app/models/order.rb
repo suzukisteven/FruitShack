@@ -9,6 +9,20 @@ class Order < ApplicationRecord
     order_items.collect {|oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0}.sum
   end
 
+  def shipping
+    5
+  end
+
+  def tax
+    (subtotal * 1.06) - subtotal
+  end
+
+  def total
+    subtotal + tax + shipping
+  end
+
+  # Called during checkout - Resets the cart by setting order_status_id to 4: i.e. Cart status is 'completed'.
+  # Also updates subtotal to 0 and removes all order_items
   def clear_cart
     self.order_status_id = 4
     self[:subtotal] = 0

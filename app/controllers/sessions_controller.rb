@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     else
       user = User.create_with_auth_and_hash(authentication, auth_hash)
       @next = root_url
-      @notice = "User successfully created. Please confirm or edit details"
+      @notice = "User was successfully created. Please confirm or edit details"
     end
 
     session[:user_id] = user.id
@@ -23,6 +23,14 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:email])
+
+    # Facebook Oauth
+    # if request.env[‘omniauth.auth’]
+    #   user = User.create_with_omniauth(request.env[‘omniauth.auth’])
+    #   session[:user_id] = user.id
+    #   redirect_to '/'
+    # end
+
     if user && user.authenticate(params[:password])
 
       if params[:remember_me]
