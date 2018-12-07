@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     if authentication.user
       user = authentication.user
       authentication.update_token(auth_hash)
+      cookies.permanent[:auth_token] = user.auth_token
       @next = root_url
       @notice = "You have successfully signed in"
 
